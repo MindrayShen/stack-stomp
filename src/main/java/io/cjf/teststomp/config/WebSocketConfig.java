@@ -17,12 +17,12 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry
                                                registry) {
         registry.addEndpoint("/cjfstompsrv2")
-                .setAllowedOrigins("http://localhost:3000").withSockJS();
+                .setAllowedOrigins("http://localhost:3000");
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/mytopic/");
+        config.enableSimpleBroker("/mytopic","/myqueue");
         config.setApplicationDestinationPrefixes("/myapp");
         config.setUserDestinationPrefix("/user/");
     }

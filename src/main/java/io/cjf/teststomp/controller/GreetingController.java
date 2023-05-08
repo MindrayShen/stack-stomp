@@ -1,6 +1,7 @@
 package io.cjf.teststomp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -20,6 +21,14 @@ public class GreetingController {
     public String greeting(String message, Principal principal) throws Exception {
         String name = principal.getName();
         simpMessagingTemplate.convertAndSendToUser(name,"/mytopic/greetings", message);
+        return "发送成功";
+    }
+
+    @MessageMapping("/queue/{raceId}")
+//    @SendTo("/mytopic/greetings")
+//    @SendToUser
+    public String queue(@DestinationVariable("raceId") Long raceId, String message) throws Exception {
+        simpMessagingTemplate.convertAndSend("/myqueue/"+raceId, message);
         return "发送成功";
     }
 
