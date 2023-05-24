@@ -18,8 +18,10 @@ public class MyScheduler {
 
     private Integer count = 0;
 
-//    @Scheduled(fixedRate = 3000)
-    public void sendData(){
+    @Scheduled(fixedRate = 3000)
+    public void sendData() throws InterruptedException {
+        System.out.println("开始处理定时任务");
+        Thread.sleep(10000);
         count++;
         logger.info("begin to send data {}", count);
         simpMessagingTemplate.convertAndSend("/mytopic/greetings", count);
